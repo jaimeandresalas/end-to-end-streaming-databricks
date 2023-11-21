@@ -2,7 +2,7 @@ from pyspark.sql.functions import from_utc_timestamp, date_format
 from pyspark.sql.types import TimestampType
 from datetime import datetime
 class DataProcessing:
-    def __init__(self,spark, dbutils_obj, base_path):
+    def __init__(self,spark, base_path, dbutils_obj=None):
         self.spark = spark
         self.dbutils = dbutils_obj
         self.base_path = base_path
