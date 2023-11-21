@@ -1,14 +1,20 @@
 from pyspark.sql.functions import from_utc_timestamp, date_format
-from pyspark.sql.types import DateType, TimestampType
+from pyspark.sql.types import TimestampType
 from datetime import datetime
 class DataProcessing:
-    def __init__(self,spark, dbutils, base_path):
+    def __init__(self,spark, dbutils_obj, base_path):
         self.spark = spark
-        self.dbutils = dbutils
+        self.dbutils = dbutils_obj
         self.base_path = base_path
         self._tables_name = []
         self.update_tables_name()
         
+    @dbutils.setter
+    def dbutils(self, dbutils_obj):
+        if dbutils_obj = None:
+            self._dbutils = dbutils
+        else:
+            dbutils = dbutils_obj
     @property
     def tables_name(self):
         return self._tables_name
