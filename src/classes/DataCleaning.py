@@ -2,19 +2,13 @@ from pyspark.sql.functions import from_utc_timestamp, date_format
 from pyspark.sql.types import TimestampType
 from datetime import datetime
 class DataProcessing:
-    def __init__(self,spark, base_path, dbutils_obj=None):
+    def __init__(self,spark, base_path, dbutils):
         self.spark = spark
-        self.dbutils = dbutils_obj
+        self._dbutils = dbutils
         self.base_path = base_path
         self._tables_name = []
         self.update_tables_name()
         
-    @dbutils.setter
-    def dbutils(self, dbutils_obj):
-        if dbutils_obj == None:
-            self._dbutils = dbutils
-        else:
-            dbutils = dbutils_obj
     @property
     def tables_name(self):
         return self._tables_name
@@ -22,6 +16,7 @@ class DataProcessing:
     def update_tables_name(self) -> None:
         for i in self.dbutils.fs.ls(self.base_path):
             self._tables_name.append(i.name.split("/")[0])
+
     
     @staticmethod
     def find_latest_file(self,table_name):
@@ -77,9 +72,8 @@ class DataProcessing:
                            date_format(
                                from_utc_timestamp(date_now,"UTC"),"yyyy-MM-dd"))
         return df
-
     
-    def bronze_to_silver(self):
+    def bronze_to_silver(self) -> None:
         """
         Transform the bronze tables to silver delta tables
         """
@@ -94,4 +88,7 @@ class DataProcessing:
              .format("delta")
              .partitionBy("date_processed")
              .save(silver_path))
+        return None 
+
+    
             
