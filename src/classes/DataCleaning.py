@@ -11,7 +11,7 @@ class DataProcessing:
         
     @dbutils.setter
     def dbutils(self, dbutils_obj):
-        if dbutils_obj = None:
+        if dbutils_obj == None:
             self._dbutils = dbutils
         else:
             dbutils = dbutils_obj
@@ -76,8 +76,9 @@ class DataProcessing:
         df = df.withColumn("date_processed", 
                            date_format(
                                from_utc_timestamp(date_now,"UTC"),"yyyy-MM-dd"))
+        return df
+
     
-    @staticmethod
     def bronze_to_silver(self):
         """
         Transform the bronze tables to silver delta tables
