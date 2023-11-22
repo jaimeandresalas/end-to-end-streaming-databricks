@@ -77,8 +77,7 @@ class DataProcessing:
                            date_format(
                                from_utc_timestamp(date_now,"UTC"),"yyyy-MM-dd"))
         return df
-
-    
+    @staticmethod
     def bronze_to_silver(self):
         """
         Transform the bronze tables to silver delta tables
