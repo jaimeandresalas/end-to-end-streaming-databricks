@@ -67,7 +67,7 @@ class DataProcessing:
         """
         Add time processing to the dataframe
         """
-        df = df.withColumn("date_processed", lit(datetime.now().strftime("yyyy-MM-dd")))
+        df = df.withColumn("date_processed", lit(datetime.now().strftime('%Y-%m-%d')))
         return df
     
     def bronze_to_silver(self) -> None:

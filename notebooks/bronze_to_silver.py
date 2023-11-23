@@ -25,4 +25,10 @@ processing.bronze_to_silver()
 
 # COMMAND ----------
 
+from datetime import datetime
+#datetime.now().strftime("yyyy-mm-dd")
+datetime.now().strftime('%Y-%m-%d')
+
+# COMMAND ----------
+
 
