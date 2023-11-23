@@ -2,7 +2,7 @@
 from pyspark.sql import SparkSession
 from src.classes.DataCleaning import DataProcessing
 spark = (SparkSession.builder
-         .appName("brz-to-silver")
+         .appName("silver-to-gold")
          .getOrCreate())
 spark.sparkContext.setLogLevel("ERROR")
 
@@ -14,7 +14,4 @@ base_path = dbutils.widgets.get(name="base_path")
 # COMMAND ----------
 
 processing = DataProcessing(spark=spark,base_path = base_path, dbutils=dbutils)
-
-# COMMAND ----------
-
-processing.bronze_to_silver()
+processing.silver_to_gold()
