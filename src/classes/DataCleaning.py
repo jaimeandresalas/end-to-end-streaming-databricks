@@ -79,7 +79,7 @@ class DataProcessing:
         Transform the bronze tables to silver delta tables
         """
         for table in self._tables_name:
-            df = self.spark.read.parquet(self.find_latest_file(table))
+            df = self.spark.read.parquet(self.find_latest_file(table_name=table))
             df = self.time_processing(df)
             df = self.drop_duplicates(df)
             df = self.drop_null(df)

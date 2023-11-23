@@ -8,8 +8,12 @@ spark.sparkContext.setLogLevel("ERROR")
 
 # COMMAND ----------
 
+dbutils.fs.ls('/mnt/data/bronze/sql_server/SalesLT/')
+
+# COMMAND ----------
+
 base_path = '/mnt/data/bronze/sql_server/SalesLT/'
-DataProcessing(spark=spark,base_path = base_path, dbutils=dbutils)
+processing = DataProcessing(spark=spark,base_path = base_path, dbutils=dbutils)
 
 # COMMAND ----------
 
