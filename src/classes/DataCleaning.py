@@ -27,7 +27,7 @@ class DataProcessing:
         if not files : 
             return None
         latest_file = max(files, key= lambda file: file.name)
-        return latest_file.path+table_name
+        return latest_file.path+table_name + ".parquet"
     
     @staticmethod
     def time_processing(df):

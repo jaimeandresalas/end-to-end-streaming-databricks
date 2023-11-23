@@ -12,6 +12,10 @@ dbutils.fs.ls('/mnt/data/bronze/sql_server/SalesLT/')
 
 # COMMAND ----------
 
+dbutils.fs.ls('dbfs:/mnt/data/bronze/sql_server/SalesLT/Address/2023-11-19T02:47:35.0844257Z /')
+
+# COMMAND ----------
+
 base_path = '/mnt/data/bronze/sql_server/SalesLT/'
 processing = DataProcessing(spark=spark,base_path = base_path, dbutils=dbutils)
 
