@@ -15,7 +15,7 @@ class DataProcessing:
         return self._tables_name
     
     def update_tables_name(self) -> None:
-        for i in self.dbutils.fs.ls(self.base_path):
+        for i in self._dbutils.fs.ls(self.base_path):
             self._tables_name.append(i.name.split("/")[0])
 
     
@@ -24,7 +24,7 @@ class DataProcessing:
         """
         Find the latest file in the table directory
         """
-        files = self.dbutils.fs.ls(f"{self.base_path}/{table_name}")
+        files = self._dbutils.fs.ls(f"{self.base_path}/{table_name}")
         if not files : 
             return None
         latest_file = max(files, key= lambda file: file.name)
