@@ -103,8 +103,6 @@ class DataProcessing:
         """
         Find the location of the silver table
         """
-        #base_path = '/mnt/data/bronze/sql_server/SalesLT/'
-        #silver_path = '/mnt/data/silver/sql_server/SalesLT/Address/'
         base_path = self.base_path.replace("bronze","silver")
         return base_path + table_name + "/"
 
