@@ -111,7 +111,7 @@ class DataProcessing:
         Transform the silver tables to gold delta tables
         """
         for table in self._tables_name:
-            df = self.spark.read.delta(self.find_location_silver(table_name=table))
+            df = self.spark.read.format('delta').load(self.find_location_silver(table_name=table))
             df = self.rename_columns(df)
             gold_path = self.base_path.replace("silver","gold") + table
             (df.write
