@@ -19,7 +19,6 @@ class DataProcessing:
             self._tables_name.append(i.name.split("/")[0])
 
     
-    @staticmethod
     def find_latest_file(self,table_name):
         """
         Find the latest file in the table directory
