@@ -9,6 +9,7 @@ class DataProcessing:
         self._tables_name = []
         self.update_tables_name()
         
+    
     @property
     def tables_name(self):
         return self._tables_name
