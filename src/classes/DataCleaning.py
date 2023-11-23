@@ -1,4 +1,4 @@
-from pyspark.sql.functions import from_utc_timestamp, date_format
+from pyspark.sql.functions import from_utc_timestamp, date_format, lit
 from pyspark.sql.types import TimestampType
 from datetime import datetime
 class DataProcessing:
@@ -67,10 +67,7 @@ class DataProcessing:
         """
         Add time processing to the dataframe
         """
-        date_now = datetime.timestamp(datetime.now())
-        df = df.withColumn("date_processed", 
-                           date_format(
-                               from_utc_timestamp(date_now,"UTC"),"yyyy-MM-dd"))
+        df = df.withColumn("date_processed", lit(datetime.now().strftime("yyyy-MM-dd")))
         return df
     
     def bronze_to_silver(self) -> None:
