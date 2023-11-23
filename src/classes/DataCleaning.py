@@ -1,20 +1,15 @@
-from pyspark.sql.functions import from_utc_timestamp, date_format
+from pyspark.sql.functions import from_utc_timestamp, date_format, lit
 from pyspark.sql.types import TimestampType
 from datetime import datetime
 class DataProcessing:
-    def __init__(self,spark, base_path, dbutils_obj=None):
+    def __init__(self,spark, base_path, dbutils):
         self.spark = spark
-        self.dbutils = dbutils_obj
+        self.dbutils = dbutils
         self.base_path = base_path
         self._tables_name = []
         self.update_tables_name()
         
-    @dbutils.setter
-    def dbutils(self, dbutils_obj):
-        if dbutils_obj == None:
-            self._dbutils = dbutils
-        else:
-            dbutils = dbutils_obj
+    
     @property
     def tables_name(self):
         return self._tables_name
@@ -22,8 +17,8 @@ class DataProcessing:
     def update_tables_name(self) -> None:
         for i in self.dbutils.fs.ls(self.base_path):
             self._tables_name.append(i.name.split("/")[0])
+
     
-    @staticmethod
     def find_latest_file(self,table_name):
         """
         Find the latest file in the table directory
@@ -32,7 +27,7 @@ class DataProcessing:
         if not files : 
             return None
         latest_file = max(files, key= lambda file: file.name)
-        return latest_file.path+table_name
+        return latest_file.path+table_name + ".parquet"
     
     @staticmethod
     def time_processing(df):
@@ -72,18 +67,15 @@ class DataProcessing:
         """
         Add time processing to the dataframe
         """
-        date_now = datetime.timestamp(datetime.now())
-        df = df.withColumn("date_processed", 
-                           date_format(
-                               from_utc_timestamp(date_now,"UTC"),"yyyy-MM-dd"))
+        df = df.withColumn("date_processed", lit(datetime.now().strftime('%Y-%m-%d')))
         return df
-    @staticmethod
-    def bronze_to_silver(self):
+    
+    def bronze_to_silver(self) -> None:
         """
         Transform the bronze tables to silver delta tables
         """
         for table in self._tables_name:
-            df = self.spark.read.parquet(self.find_latest_file(table))
+            df = self.spark.read.parquet(self.find_latest_file(table_name=table))
             df = self.time_processing(df)
             df = self.drop_duplicates(df)
             df = self.drop_null(df)
@@ -93,4 +85,7 @@ class DataProcessing:
              .format("delta")
              .partitionBy("date_processed")
              .save(silver_path))
+        return None 
+
+    
             
