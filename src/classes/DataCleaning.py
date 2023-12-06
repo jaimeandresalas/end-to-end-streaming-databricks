@@ -84,6 +84,7 @@ class DataProcessing:
             (df.write
              .format("delta")
              .partitionBy("date_processed")
+             .mode("overwrite")
              .save(silver_path))
         return None 
 
@@ -117,5 +118,6 @@ class DataProcessing:
             (df.write
              .format("delta")
              .partitionBy("date_processed")
+             .mode("overwrite")
              .save(gold_path))
         return None
