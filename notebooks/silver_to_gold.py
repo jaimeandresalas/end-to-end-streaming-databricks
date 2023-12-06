@@ -15,3 +15,7 @@ base_path = dbutils.widgets.get(name="base_path")
 
 processing = DataProcessing(spark=spark,base_path = base_path, dbutils=dbutils)
 processing.silver_to_gold()
+
+# COMMAND ----------
+
+
